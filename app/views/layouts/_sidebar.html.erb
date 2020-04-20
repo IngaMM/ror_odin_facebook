@@ -1,0 +1,21 @@
+<div class="sidebar">
+  <ul class="list-group list-group-flush">
+    <% if user_signed_in? %>
+  <li class="list-group-item">Logged in as <b><%= current_user.email %></b></li>
+  <li class="list-group-item">
+    <b>Open friend requests</b>
+    <br>
+    Sent <span class="badge badge-light"><%= current_user.invited_users.count %></span>
+    <br>
+    Received <span class="badge badge-light"><%= current_user.inviting_users.count %></span>
+  </li>
+  <li class="list-group-item">Friends <span class="badge badge-light"><%= current_user.friends.count %></span></li>
+  <li class="list-group-item"><%= link_to "Write a new post", new_post_path %></li>
+  <li class="list-group-item"><%= link_to "Upload a new photo", new_photo_path %></li>
+  <% else %>
+  <li class="list-group-item"><b>You are not logged in.</b></li>
+  <li class="list-group-item"><%= link_to "Sign up", new_user_registration_path %></li>
+  <li class="list-group-item"><%= link_to "Log in", new_user_session_path %></li>
+  <% end %>
+</ul>
+</div>

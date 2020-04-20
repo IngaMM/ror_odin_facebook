@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contactbook</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row"
+        <div class="col-md-12">
+          <%= render 'layouts/header' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <%= render 'layouts/sidebar' %>
+        </div>
+        <div class="col-md-8 main_body">
+          <% if flash.notice %>
+            <p class="alert alert-success"><%= flash.notice %></p>
+          <% end %>
+          <% if flash.alert %>
+            <p class="alert alert-danger"><%= flash.alert %></p>
+          <% end %>
+          <%= yield %>
+        </div>
+        <div class="col-md-1">
+        </div>
+      </div>
+    </div>
+
+    <!--<%= debug(params) if Rails.env.development? %>-->
+  </body>
+
+</html>

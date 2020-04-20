@@ -1,0 +1,108 @@
+<h1 class="index_header text-center">
+    <% if @user.avatar.attached? %>
+      <%= image_tag @user.avatar.variant(resize: "60x60") %>
+    <% else %>
+      <%= gravatar_image_tag(@user.email, :gravatar => { :size => 60 })  %>
+    <% end %>
+  Home of <%= @user.email %> </h1>
+
+
+
+<% if @user == current_user %>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card friends_card">
+      <div class="card-body text-center">
+        <h5 class="card-title">Friend requests sent</h5>
+        <p class="card-text">
+
+            <ul class="friends_card_list">
+            <% if @user.invited_users.any? %>
+                <% @user.invited_users.each do |iu| %>
+                  <li> <%=link_to iu.email, user_path(iu.id) %> </li>
+                <% end %>
+                <% else %>
+                  <li>None</li>
+                <% end %>
+            </ul>
+        </p>
+        <%= link_to "Send out more", users_path, class: "card-link" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card friends_card">
+      <div class="card-body text-center">
+        <h5 class="card-title">Friend requests received</h5>
+        <p class="card-text">
+
+            <ul class="friends_card_list">
+            <% if @user.inviting_users.any? %>
+                <% @user.inviting_users.each do |iu| %>
+                  <li> <%=link_to iu.email, user_path(iu.id) %> | <%= link_to "Accept", friendships_path(:befriended_id => iu.id), :method => :post %> </li>
+                <% end %>
+                <% else %>
+                  <li>None</li>
+                <% end %>
+            </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<div class="row">
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-8">
+    <div class="card friends_card">
+      <div class="card-body text-center">
+        <h5 class="card-title">Friends</h5>
+        <p class="card-text">
+
+            <ul class="friends_card_list">
+              <% if @user.friends.any? %>
+                <% @user.friends.each do |f| %>
+                  <li> <%=link_to f.email, user_path(f.id) %>
+
+                    <% if @user == current_user %>
+                      <% friendship = @user.friendships.find_by(befriended: f)%> |
+                      <%= link_to "Delete friendship", friendship_path(friendship), :method => :delete %>
+                    <% end %>
+                    </li>
+                <% end %>
+              <% else %>
+                <li>None</li>
+              <% end %>
+
+            </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2">
+  </div>
+</div>
+
+<% if @posts.any? %>
+<h2 class="your_things"> Posts </h2>
+<br>
+  <%= will_paginate @posts %>
+  <br>
+  <%= render partial: "shared/post", collection: @posts  %>
+  <br>
+  <%= will_paginate @posts %>
+  <br>
+<% end %>
+
+<% if @photos.any? %>
+<h2 class="your_things"> Photos </h2>
+<br>
+  <%= will_paginate @photos %>
+  <br>
+  <%= render partial: "shared/photo", collection: @photos  %>
+  <br>
+  <%= will_paginate @photos %>
+<% end %>

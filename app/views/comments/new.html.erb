@@ -1,0 +1,12 @@
+<h1> New comment </h1>
+<%= form_for(@comment) do |f| %>
+  <%= render 'devise/shared/error_messages', resource: f.object %>
+  <div class="field">
+    <br>
+    <%= f.text_area :content, placeholder: "Compose new comment..." %>
+    <%= f.hidden_field :commentable_id, :value => @commentable.id %>
+    <%= f.hidden_field :commentable_type, :value => @commentable.class.name %>
+  </div>
+  <br>
+  <%= f.submit "Publish Comment", :class => "btn btn-primary"  %>
+<% end %>

@@ -1,0 +1,39 @@
+<div class="card photo_card">
+  <div class="card-header">
+      <% if photo.user.avatar.attached? %>
+        <%= image_tag photo.user.avatar.variant(resize: "40x40")%>
+      <% else %>
+      <%= gravatar_image_tag(photo.user.email, :gravatar => { :size => 40 })  %>
+      <% end %>
+      <%=link_to photo.user.email, user_path(photo.user.id) %>
+  </div>
+  <div class="card-body">
+    <%= image_tag photo.picture.url, :class => "photo_image" %>
+    <% if photo.comments.any? %>
+        <% photo.comments.each do |c| %>
+        <div class="card_comment">
+            <div>
+            <% if c.user.avatar.attached? %>
+              <%= image_tag c.user.avatar.variant(resize: "20x20")%>
+            <% else %>
+            <%= gravatar_image_tag(c.user.email, :gravatar => { :size => 20 })  %>
+            <% end %>
+            <b><%=link_to c.user.email, user_path(c.user.id) %></b>
+          </div>
+              <%= c.content %>
+              <br>
+          </div>
+        <% end %>
+    <% end %>
+    <p class="card-text">
+      Likes <span class="badge badge-light"><%= photo.likes.count %></span>
+    </p>
+    <%= link_to "Comment", new_comment_path(:photo_id => photo.id), :class => "btn btn-primary" %>
+    <% if current_user.id != photo.user.id %>
+      <%= link_to "Like", likes_path(:photo_id => photo.id), :method => :photo, :class => "btn btn-primary" %>
+    <% end %>
+    <% if current_user.id == photo.user.id %>
+      <%= link_to 'Delete', photo, :method => :delete, data: {confirm: "Are you sure?"},  :class => "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<header>
+
+
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand">Contactbook</a>
+  <% if user_signed_in? %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <% class_list = "nav-link " + active_class(user_path(current_user.id)) %>
+        <%= link_to "Home", user_path(current_user.id), class: class_list %>
+      </li>
+      <li class="nav-item">
+        <% class_list = "nav-link " + active_class(posts_path) %>
+        <%= link_to "Post Timeline", posts_path, class: class_list %>
+      </li>
+      <li class="nav-item">
+        <% class_list = "nav-link " + active_class(photos_path) %>
+        <%= link_to "Photo Timeline", photos_path, class: class_list %>
+      </li>
+      <li class="nav-item">
+        <% class_list = "nav-link " + active_class(users_path) %>
+        <%= link_to "All Users", users_path, class: class_list %>
+      </li>
+    </ul>
+    <% if user_signed_in? %>
+      <%= link_to "Log out", destroy_user_session_path, :method => :delete, class: "btn btn-primary"%>
+    <% end %>
+  </div>
+  <% end %>
+</nav>
+</header>

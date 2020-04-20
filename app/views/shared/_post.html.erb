@@ -1,0 +1,45 @@
+<div class="card post_card">
+  <div class="card-header">
+      <% if post.user.avatar.attached? %>
+        <%= image_tag post.user.avatar.variant(resize: "40x40")%>
+      <% else %>
+      <%= gravatar_image_tag(post.user.email, :gravatar => { :size => 40 })  %>
+      <% end %>
+      <%=link_to post.user.email, user_path(post.user.id) %>
+  </div>
+  <div class="card-body">
+    <p class="card-text"><%= post.content %></p>
+    <div>
+      <% if post.picture? %>
+        <%= image_tag post.picture.url, :class => "post_image" %>
+      <% end %>
+    </div>
+    <% if post.comments.any? %>
+        <% post.comments.each do |c| %>
+        <div class="card_comment">
+            <div>
+            <% if c.user.avatar.attached? %>
+              <%= image_tag c.user.avatar.variant(resize: "20x20")%>
+            <% else %>
+            <%= gravatar_image_tag(c.user.email, :gravatar => { :size => 20 })  %>
+            <% end %>
+            <b><%=link_to c.user.email, user_path(c.user.id) %></b>
+          </div>
+              <%= c.content %>
+              <br>
+          </div>
+        <% end %>
+    <% end %>
+    <p class="card-text">
+      Likes <span class="badge badge-light"><%= post.likes.count %></span>
+    </p>
+    <%= link_to "Comment", new_comment_path(:post_id => post.id), :class => "btn btn-primary" %>
+    <% if current_user.id != post.user.id %>
+      <%= link_to "Like", likes_path(:post_id => post.id), :method => :post, :class => "btn btn-primary" %>
+    <% end %>
+    <% if current_user.id == post.user.id %>
+      <%= link_to "Edit", edit_post_path(:post_id => post.id), :class => "btn btn-primary" %>
+      <%= link_to 'Delete', post, :method => :delete, data: {confirm: "Are you sure?"}, :class => "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

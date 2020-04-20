@@ -1,0 +1,21 @@
+<h1 > Edit post </h1>
+<%= form_for(@post) do |f| %>
+  <%= render 'devise/shared/error_messages', resource: f.object %>
+  <div class="field">
+    <br>
+    <%= f.text_area :content, placeholder: "Compose new post..." %>
+  </div>
+  <br>
+  <div>
+    <div>
+      <% if @post.picture? %>
+        <%= image_tag @post.picture.url, :class => "post_image" %>
+      <% end %>
+    </div>
+    <span class="picture">
+      <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+    </span>
+  </div>
+  <br>
+  <%= f.submit "Update Post", :class => "btn btn-primary"  %>
+<% end %>
