@@ -42,7 +42,7 @@ Additional comments
 The data that are used to seed the database use the gem faker.
 Pagination makes it possible to show many posts and photos.
 
-A live version of this app can be found at https://fast-refuge-50407.herokuapp.com
+A live version of this app can be found at https://powerful-peak-84638.herokuapp.com
 
 Requirements
 Ruby on Rails to run the app locally.
