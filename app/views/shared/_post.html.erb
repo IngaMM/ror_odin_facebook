@@ -38,7 +38,7 @@
       <%= link_to "Like", likes_path(:post_id => post.id), :method => :post, :class => "btn btn-primary" %>
     <% end %>
     <% if current_user.id == post.user.id %>
-      <%= link_to "Edit", edit_post_path(:post_id => post.id), :class => "btn btn-primary" %>
+      <%= link_to "Edit", edit_post_path(:id => post.id), :class => "btn btn-primary" %>
       <%= link_to 'Delete', post, :method => :delete, data: {confirm: "Are you sure?"}, :class => "btn btn-primary" %>
     <% end %>
   </div>
